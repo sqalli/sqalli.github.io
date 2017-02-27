@@ -724,3 +724,37 @@ table.dataTable thead .sorting:after {
   width: 160px;
   margin: 0 auto;
 }
+
+#ex1Slider .slider-selection, #timingSlider .slider-selection, #breakDuration .slider-selection{
+  background: #FF8282;
+}
+#ex1Slider .slider-handle, #timingSlider .slider-handle, #breakDuration .slider-handle{
+  background: red;
+}
+
+#timingSlider.slider-horizontal{
+  width: 320px!important;
+}
+.slider.slider-horizontal{
+  width: 400px!important;
+}
+
+.slider-label{
+  font-weight: 900;
+  margin: 0 16px;
+}
+
+.slider-ctn{
+  padding: 0 16px;
+}
+
+.date-icn{
+  padding: 10px 16px;
+  margin-top: 25px;
+  background-color: #980015!important;
+  color: #fff;
+}
+
+.input-group-addon{
+  cursor: pointer;
+}

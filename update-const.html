@@ -19,7 +19,6 @@
 
     <!-- Custom CSS -->
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="dist/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="vendor/morrisjs/morris.css" rel="stylesheet">
@@ -27,6 +26,11 @@
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.css" rel="stylesheet" type="text/css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css">
+
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -79,46 +83,36 @@
         <div id="page-wrapper">
             <div class="constraint-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Constraint</h3>
+                    <h3 class="panel-title">Exam week constraints</h3>
                 </div>
                 <div class="panel-body">
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <label for="exampleInputFile">Time slots per day</label>
+                                <label for="exampleInputFile">Number of exams per day</label>
                                 <input class="form-control" name="time-slots" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputFile">Time slot duration</label>
-                                <input class="form-control" name="slot-duration" type="text">
+                                <label for="exampleInputFile">Exams duration</label>
+                                <div class="slider-ctn">
+                                    <input id="ex1" class="myslider" data-slider-id='ex1Slider' type="text" data-slider-min="10" data-slider-max="180" data-slider-step="10" data-slider-value="50"/>
+                                    <span id="breakTime" class="slider-label"></span>
+                                </div>
                             </div>
-                            <div class="row">
-                              <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    <label for="exampleInputFile">Earliest Starting Time</label>
-                                    <input class="form-control" name="time-slots" type="text">
+                            <div class="form-group">
+                                <label>Exam day time range</label>
+                                <div class="slider-ctn">
+                                    <span id="startTime" class="slider-label"></span>
+                                    <input id="timingSlider" data-slider-id='timingSlider' class="myslider" type="text" class="span2" value="" data-slider-min="480" data-slider-max="1260" data-slider-step="30" data-slider-value="[480,1260]"/>
+                                    <span id="endTime" class="slider-label"></span>
                                 </div>
-                              </div>
-                              <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    <label for="exampleInputFile">Latest Ending time</label>
-                                    <input class="form-control" name="slot-duration" type="text">
-                                </div>
-                              </div>
                             </div>
-                            <div class="row">
-                              <div class="col-lg-6">
-                                <div class="form-group">  
-                                    <label for="exampleInputFile">Maximum Break Time duration</label>
-                                    <input class="form-control" name="break-time" type="text">
+                            <div class="form-group">
+                                <label for="exampleInputFile">Break duration</label>
+                                <div class="slider-ctn">
+                                    <input id="breakDuration" class="myslider" data-slider-id='breakDuration' type="text" data-slider-min="10" data-slider-max="180" data-slider-step="10" data-slider-value="10"/>
+                                    <span id="breakDurationLabel" class="slider-label"></span>
                                 </div>
-                              </div>
-                              <div class="col-lg-6">
-                                <div class="form-group">  
-                                    <label for="exampleInputFile">Minimum Break Time duration</label>
-                                    <input class="form-control" name="break-time" type="text">
-                                </div>
-                              </div>
                             </div>
                             <div class="input-group">
                                 <input type="checkbox" aria-label="..." style="margin: 8px 0;">
@@ -131,6 +125,7 @@
                                     <label for="exampleInputFile">Start Date</label>
                                     <input type="text" class="form-control">
                                     <div class="input-group-addon">
+                                        <span class="fa fa-calendar date-icn"></span>
                                     </div>
                                   </div>
                                 </div><!-- /input-group -->
@@ -141,6 +136,7 @@
                                     <label for="exampleInputFile">End Date</label>
                                     <input type="text" class="form-control">
                                     <div class="input-group-addon">
+                                        <span class="fa fa-calendar date-icn"></span>
                                     </div>
                                   </div>
                                 </div>
@@ -160,10 +156,6 @@
     </div>
     <!-- /#wrapper -->
 
-    <script type="text/javascript">
-        $('.datepicker').datepicker();
-    </script>
-
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
@@ -181,7 +173,50 @@
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
 
-    <script src="dist/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/bootstrap-slider.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker();
+    </script>
+
+    <script type="text/javascript">
+        $('#ex1').slider({
+            formatter: function(value) {
+                $("#breakTime").html(value + " min");
+                return value + " min";
+            }
+        });
+
+        $('#breakDuration').slider({
+            formatter: function(value) {
+                $("#breakDurationLabel").html(value + " min");
+                return value + " min";
+            }
+        });
+        
+        $("#timingSlider").slider({
+            formatter: function(value) {
+                if(value.length){
+                    var hours = Math.floor( value[0] / 60);          
+                    var minutes = (value[0] % 60 < 10)? "0" + value[0] % 60 : value[0] % 60;
+
+                    var startTime = hours + ":" + minutes;
+
+                    $("#startTime").html(startTime);
+
+                    hours = Math.floor( value[1] / 60);
+                    minutes = (value[1] % 60 < 10)? "0" + value[1] % 60 : value[1] % 60;
+
+                    var endTime = hours + ":" + minutes;
+                    
+                    $("#endTime").html(endTime);
+
+                    return startTime + " - " + endTime;
+                }
+            }
+        });
+    </script>
 
 </body>
 
